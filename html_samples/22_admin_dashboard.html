@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <style>
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .metric { border: 1px solid #333; border-radius: 8px; padding: 1rem; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #444; padding: 0.5rem; text-align: left; }
+    .warn::before { content: "⚠ "; color: #f0ad4e; }
+  </style>
+</head>
+<body>
+  <div id="app" class="layout" data-user-id="42" data-org="acme-corp">
+    <aside class="sidebar" aria-label="Sidebar">
+      <input type="search" name="q" placeholder="Filter…" autocomplete="off" autofocus>
+      <menu>
+        <li><a href="/dashboard" aria-current="page">Overview</a></li>
+        <li><a href="/users">Users</a></li>
+        <li><a href="/settings">Settings</a></li>
+      </menu>
+    </aside>
+
+    <section class="content">
+      <header>
+        <h1>Operations</h1>
+        <p class="warn">3 deployments need review</p>
+      </header>
+
+      <div class="grid">
+        <div class="metric" data-metric="mrr" data-value="128400">
+          <h2>MRR</h2>
+          <p>$128,400</p>
+        </div>
+        <div class="metric" data-metric="churn" data-value="2.1">
+          <h2>Churn</h2>
+          <p>2.1%</p>
+        </div>
+        <div class="metric" data-metric="latency" data-value="98">
+          <h2 p99="98ms">Latency</h2>
+          <p>98ms p99</p>
+        </div>
+      </div>
+
+      <table summary="Recent jobs">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Status</th>
+            <th scope="col">Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-job-id="job_001">
+            <td>job_001</td>
+            <td><span class="ok">done</span></td>
+            <td>alex</td>
+          </tr>
+          <tr data-job-id="job_002">
+            <td>job_002</td>
+            <td><span class="fail">failed</span></td>
+            <td>sam</td>
+          </tr>
+          <tr data-job-id="job_003">
+            <td>job_003</td>
+            <td>running</td>
+            <td>riley</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <form action="/api/bulk" method="post" enctype="multipart/form-data">
+        <fieldset>
+          <legend>Bulk import</legend>
+          <label><input type="checkbox" name="dry_run" checked> Dry run</label>
+          <label><input type="file" name="upload" accept=".csv,.json"></label>
+          <button type="submit" formaction="/api/bulk?fast=1" formmethod="post">Import</button>
+          <button type="reset">Reset</button>
+        </fieldset>
+      </form>
+    </section>
+  </div>
+
+  <script type="application/json" id="bootstrap">
+    {"roles":["admin","billing"],"featureFlags":{"newTable":true}}
+  </script>
+  <script>
+    const rows = document.querySelectorAll("tr[data-job-id]");
+    console.log("rows", rows.length, "<tr> stays in script as text if quoted");
+  </script>
+</body>
+</html>

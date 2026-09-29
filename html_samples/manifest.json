@@ -1,0 +1,109 @@
+{
+  "generatedAt": "2026-09-29T19:40:56.019Z",
+  "files": [
+    {
+      "name": "01_basic_element.html",
+      "label": "01 basic element"
+    },
+    {
+      "name": "02_nested.html",
+      "label": "02 nested"
+    },
+    {
+      "name": "03_siblings.html",
+      "label": "03 siblings"
+    },
+    {
+      "name": "04_repeated_tags.html",
+      "label": "04 repeated tags"
+    },
+    {
+      "name": "05_text_and_elements.html",
+      "label": "05 text and elements"
+    },
+    {
+      "name": "06_attributes.html",
+      "label": "06 attributes"
+    },
+    {
+      "name": "07_boolean_attributes.html",
+      "label": "07 boolean attributes"
+    },
+    {
+      "name": "08_void_elements.html",
+      "label": "08 void elements"
+    },
+    {
+      "name": "09_self_closing.html",
+      "label": "09 self closing"
+    },
+    {
+      "name": "10_comments.html",
+      "label": "10 comments"
+    },
+    {
+      "name": "11_doctype.html",
+      "label": "11 doctype"
+    },
+    {
+      "name": "12_script.html",
+      "label": "12 script"
+    },
+    {
+      "name": "13_style.html",
+      "label": "13 style"
+    },
+    {
+      "name": "14_malformed_nesting.html",
+      "label": "14 malformed nesting"
+    },
+    {
+      "name": "15_missing_closing_tags.html",
+      "label": "15 missing closing tags"
+    },
+    {
+      "name": "16_unmatched_closing.html",
+      "label": "16 unmatched closing"
+    },
+    {
+      "name": "17_whitespace.html",
+      "label": "17 whitespace"
+    },
+    {
+      "name": "18_deeply_nested.html",
+      "label": "18 deeply nested"
+    },
+    {
+      "name": "19_empty_input.txt",
+      "label": "19 empty input"
+    },
+    {
+      "name": "20_larger_page.html",
+      "label": "20 larger page"
+    },
+    {
+      "name": "21_saas_landing_inline.html",
+      "label": "21 saas landing inline"
+    },
+    {
+      "name": "22_admin_dashboard.html",
+      "label": "22 admin dashboard"
+    },
+    {
+      "name": "23_complex_form.html",
+      "label": "23 complex form"
+    },
+    {
+      "name": "24_blog_article_mixed.html",
+      "label": "24 blog article mixed"
+    },
+    {
+      "name": "25_attribute_stress.html",
+      "label": "25 attribute stress"
+    },
+    {
+      "name": "26_messy_recovery.html",
+      "label": "26 messy recovery"
+    }
+  ]
+}

@@ -1,69 +1,361 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HTML to JSON</title>
-    <script src="html2json.js"></script>
+    <title>HTML → JSON | html2json</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="html2json.js" defer></script>
+    <script src="app.js" defer></script>
     <style>
-      h1 {
-        font-family: sans-serif
+      :root {
+        color-scheme: dark;
+        --bg: #0c0f14;
+        --bg-elevated: #131820;
+        --bg-panel: #0a0d12;
+        --border: #252b36;
+        --border-focus: #4f8cff;
+        --text: #e8ecf4;
+        --text-muted: #8b95a8;
+        --accent: #4f8cff;
+        --accent-hover: #6b9fff;
+        --accent-soft: rgba(79, 140, 255, 0.12);
+        --success: #3dd68c;
+        --radius: 12px;
+        --radius-sm: 8px;
+        --shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+        --font-sans: "DM Sans", system-ui, sans-serif;
+        --font-mono: "JetBrains Mono", ui-monospace, monospace;
       }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
       body {
-        display: flex;
-        flex-direction: column;
+        margin: 0;
+        min-height: 100vh;
+        font-family: var(--font-sans);
+        font-size: 15px;
+        line-height: 1.5;
+        color: var(--text);
+        background:
+          radial-gradient(ellipse 80% 50% at 50% -20%, rgba(79, 140, 255, 0.18), transparent),
+          radial-gradient(ellipse 60% 40% at 100% 100%, rgba(61, 214, 140, 0.06), transparent),
+          var(--bg);
+      }
+
+      .app {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1.5rem 1.25rem 2rem;
+      }
+
+      .app-header {
+        margin-bottom: 1.5rem;
+      }
+
+      .app-header__badge {
+        display: inline-flex;
         align-items: center;
+        gap: 0.35rem;
+        padding: 0.25rem 0.65rem;
+        margin-bottom: 0.75rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--accent);
+        background: var(--accent-soft);
+        border: 1px solid rgba(79, 140, 255, 0.25);
+        border-radius: 999px;
       }
 
-      .container {
+      .app-header h1 {
+        margin: 0 0 0.35rem;
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .app-header p {
+        margin: 0;
+        max-width: 42rem;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      .toolbar {
         display: flex;
-        width: 100%;
-        gap: 10px;
+        flex-wrap: wrap;
+        align-items: end;
+        gap: 0.75rem;
+        padding: 1rem 1.15rem;
+        margin-bottom: 1rem;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
       }
 
-      .field {
+      .toolbar__samples {
+        display: flex;
+        flex: 1 1 220px;
+        flex-direction: column;
+        gap: 0.35rem;
+        min-width: 0;
+      }
+
+      .toolbar__samples label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+
+      .toolbar__samples select {
+        width: 100%;
+        padding: 0.55rem 2rem 0.55rem 0.75rem;
+        font-family: inherit;
+        font-size: 0.9rem;
+        color: var(--text);
+        background: var(--bg-panel)
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238b95a8' d='M3 4.5 6 7.5 9 4.5'/%3E%3C/svg%3E")
+          no-repeat right 0.75rem center;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        appearance: none;
+        cursor: pointer;
+      }
+
+      .toolbar__samples select:focus {
+        outline: none;
+        border-color: var(--border-focus);
+        box-shadow: 0 0 0 3px var(--accent-soft);
+      }
+
+      .toolbar__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: flex-end;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: 0.55rem 1rem;
+        font-family: inherit;
+        font-size: 0.875rem;
+        font-weight: 600;
+        border-radius: var(--radius-sm);
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: background 0.15s, border-color 0.15s, color 0.15s;
+      }
+
+      .btn--primary {
+        color: #fff;
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .btn--primary:hover {
+        background: var(--accent-hover);
+        border-color: var(--accent-hover);
+      }
+
+      .btn--ghost {
+        color: var(--text);
+        background: transparent;
+        border-color: var(--border);
+      }
+
+      .btn--ghost:hover {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: var(--text-muted);
+      }
+
+      .status-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+        padding: 0 0.15rem;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .status-bar kbd {
+        padding: 0.1rem 0.35rem;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+      }
+
+      .panes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        min-height: calc(100vh - 280px);
+      }
+
+      @media (max-width: 900px) {
+        .panes {
+          grid-template-columns: 1fr;
+          min-height: auto;
+        }
+      }
+
+      .pane {
         display: flex;
         flex-direction: column;
-        width: 50%;
+        min-height: 320px;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
       }
 
-      textarea {
-        width: 100%;
-        height: calc(100vh - 170px);
-        max-width: 100%;
-        white-space: pre;
-      }
-
-      .buttons {
+      .pane__head {
         display: flex;
-        gap: 10px;
-        margin-top: 10px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        padding: 0.65rem 1rem;
+        background: var(--bg-panel);
+        border-bottom: 1px solid var(--border);
       }
 
-      button {
-        width: 150px;
-        height: 40px;
-        cursor: pointer;
+      .pane__title {
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .pane__meta {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--text-muted);
+      }
+
+      .pane__body {
+        flex: 1;
+        display: flex;
+        min-height: 0;
+      }
+
+      .pane textarea {
+        flex: 1;
+        width: 100%;
+        min-height: 420px;
+        padding: 1rem 1.1rem;
+        font-family: var(--font-mono);
+        font-size: 0.8125rem;
+        line-height: 1.55;
+        color: var(--text);
+        background: transparent;
+        border: none;
+        resize: vertical;
+        white-space: pre;
+        tab-size: 2;
+      }
+
+      .pane textarea:focus {
+        outline: none;
+      }
+
+      .pane textarea::placeholder {
+        color: #5c6578;
+      }
+
+      #json {
+        color: #b8c5d9;
+      }
+
+      .pane--output textarea {
+        color: #a8d4b8;
       }
     </style>
   </head>
   <body>
-    <h1>Jito's Software Developer Intern "html2json" Test Task</h1>
+    <div class="app">
+      <header class="app-header">
+        <div class="app-header__badge">Custom parser · no DOM APIs</div>
+        <h1>HTML to JSON converter</h1>
+        <p>
+          Paste HTML or load a sample from <code style="font-family: var(--font-mono); font-size: 0.88em">html_samples/</code>.
+          The dropdown is filled from <code style="font-family: var(--font-mono); font-size: 0.88em">manifest.json</code>, generated from that folder.
+        </p>
+      </header>
 
-    <div class="container">
-      <div class="field">
-        <label for="html">Input for "html2json" conversion:</label>
-        <textarea id="html" placeholder="Enter your HTML"></textarea>
+      <section class="toolbar" aria-label="Controls">
+        <div class="toolbar__samples">
+          <label for="sample-select">Sample files</label>
+          <select id="sample-select" aria-label="Load HTML sample">
+            <option value="">Loading samples…</option>
+          </select>
+        </div>
+        <div class="toolbar__actions">
+          <button type="button" class="btn btn--primary" id="convert-btn">Convert to JSON</button>
+          <button type="button" class="btn btn--ghost" id="copy-json-btn">Copy JSON</button>
+          <button type="button" class="btn btn--ghost" id="clear-btn">Clear</button>
+        </div>
+      </section>
+
+      <div class="status-bar">
+        <span id="status-text">Initializing…</span>
+        <span><kbd>Ctrl</kbd> + <kbd>Enter</kbd> to convert</span>
       </div>
-      <div class="field">
-        <label for="json">Results of "html2json" conversion:</label>
-        <textarea disabled id="json" placeholder="Here will be output from your html2json function"></textarea>
+
+      <div class="panes">
+        <div class="pane">
+          <div class="pane__head">
+            <span class="pane__title">HTML input</span>
+            <span class="pane__meta" id="html-meta">0 characters</span>
+          </div>
+          <div class="pane__body">
+            <textarea
+              id="html"
+              spellcheck="false"
+              placeholder="Enter HTML or choose a sample above…"
+              aria-label="HTML input"
+            ></textarea>
+          </div>
+        </div>
+        <div class="pane pane--output">
+          <div class="pane__head">
+            <span class="pane__title">JSON output</span>
+            <span class="pane__meta" id="json-meta">0 characters</span>
+          </div>
+          <div class="pane__body">
+            <textarea
+              id="json"
+              readonly
+              spellcheck="false"
+              placeholder="JSON tree appears here after conversion…"
+              aria-label="JSON output"
+            ></textarea>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="buttons">
-      <button onclick="convertHtml2JsonAndSet()">Convert to JSON</button>
-      <button onclick="showExample1()">Input Example 1</button>
-      <button onclick="showExample2()">Input Example 2</button>
     </div>
   </body>
 </html>
-

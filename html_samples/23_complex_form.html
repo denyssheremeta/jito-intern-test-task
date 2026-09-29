@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration — Complex Form</title>
+</head>
+<body>
+  <main>
+    <h1>Create account</h1>
+    <!-- Multi-step style form with varied inputs -->
+    <form id="signup" name="signup" action="/register" method="post" novalidate
+          data-analytics-form="signup-v2" aria-describedby="form-help">
+      <p id="form-help">Fields marked required must be filled.</p>
+
+      <section aria-labelledby="identity-heading">
+        <h2 id="identity-heading">Identity</h2>
+        <label>
+          Email
+          <input type="email" name="email" required autocomplete="email"
+                 placeholder="you@example.com" maxlength="254">
+        </label>
+        <label>
+          Password
+          <input type="password" name="password" minlength="12" autocomplete="new-password"
+                 pattern="(?=.*[A-Z])(?=.*[0-9]).{12,}">
+        </label>
+        <input type="hidden" name="csrf" value="tok_9f3a2c1b">
+      </section>
+
+      <section aria-labelledby="prefs-heading">
+        <h2 id="prefs-heading">Preferences</h2>
+        <label><input type="radio" name="plan" value="free" checked> Free</label>
+        <label><input type="radio" name="plan" value="pro"> Pro</label>
+        <label><input type="checkbox" name="newsletter" value="1"> Newsletter</label>
+        <label><input type="checkbox" name="tos" required> Accept terms</label>
+        <input type="checkbox" disabled checked aria-label="Legacy opt-in locked">
+      </section>
+
+      <section aria-labelledby="profile-heading">
+        <h2 id="profile-heading">Profile</h2>
+        <label>
+          Bio
+          <textarea name="bio" rows="4" cols="40" maxlength="500"
+                    placeholder="Tell us about &lt;your&gt; project…"></textarea>
+        </label>
+        <label>
+          Country
+          <select name="country" multiple size="3">
+            <option value="us" selected>United States</option>
+            <option value="de">Germany</option>
+            <option value="jp">Japan</option>
+          </select>
+        </label>
+        <label>
+          Avatar
+          <input type="file" name="avatar" accept="image/png,image/jpeg">
+        </label>
+      </section>
+
+      <section aria-labelledby="attrs-heading">
+        <h2 id="attrs-heading">Attribute edge cases</h2>
+        <div class="row"
+             data-json='{"ok":true,"note":"quoted > and < inside"}'
+             data-label="Product &amp; Services"
+             style="color: red; font-size: 14px; background: url('data:image/svg+xml,<svg></svg>')">
+          Styled row with complex attributes
+        </div>
+        <meter min="0" max="100" low="25" high="75" optimum="80" value="62">62%</meter>
+        <progress max="100" value="62">62%</progress>
+        <output name="score" for="range-a">62</output>
+        <input id="range-a" type="range" name="score" min="0" max="100" value="62" step="1">
+      </section>
+
+      <footer>
+        <button type="submit" name="action" value="create">Create account</button>
+        <button type="button" onclick="history.back()">Cancel</button>
+      </footer>
+    </form>
+  </main>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-build="2026-09-29">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SaaS landing with inline styles and mixed markup">
+  <title>Orbit Analytics — Ship faster</title>
+  <link rel="preconnect" href="https://cdn.example.com" crossorigin>
+  <style>
+    :root { --brand: #4f8cff; }
+    .hero { background: linear-gradient(135deg, #111, #1a2332); padding: 4rem 2rem; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin: 0; }
+    @media (max-width: 640px) { .hero { padding: 2rem 1rem; } }
+  </style>
+</head>
+<body style="margin:0;font-family:system-ui,sans-serif;color:#e8ecf4;background:#0c0f14">
+  <!-- Marketing header -->
+  <header class="site-header" role="banner" aria-label="Primary">
+    <nav aria-label="Main navigation">
+      <a href="#features" data-track="nav-features">Features</a>
+      <a href="#pricing" data-track="nav-pricing" aria-current="page">Pricing</a>
+      <button type="button" class="cta" disabled>Coming soon</button>
+    </nav>
+  </header>
+
+  <main id="content">
+    <section class="hero" id="top">
+      <h1>Turn HTML chaos into <strong style="color:var(--brand)">structured JSON</strong></h1>
+      <p>Hello <em>parser</em> world — spacing matters here.</p>
+      <svg width="48" height="48" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+        <circle cx="24" cy="24" r="20" fill="none" stroke="#4f8cff" stroke-width="2"/>
+        <path d="M14 24 L22 32 L34 16" fill="none" stroke="#3dd68c" stroke-width="3"/>
+      </svg>
+    </section>
+
+    <section id="features" data-section="features" style="padding:2rem">
+      <article class="card" itemscope itemtype="https://schema.org/Product">
+        <h2 itemprop="name">Realtime dashboards</h2>
+        <p itemprop="description">Nested <code>&lt;tags&gt;</code> in copy should stay text.</p>
+        <img src="/assets/chart.png" alt="" width="320" height="180" loading="lazy" decoding="async">
+      </article>
+      <article class="card">
+        <h2>Team workspaces</h2>
+        <ul>
+          <li><span data-role="badge">New</span> Shared folders</li>
+          <li>Role-based access</li>
+        </ul>
+      </article>
+    </section>
+
+    <aside aria-labelledby="promo-title">
+      <h2 id="promo-title">Limited offer</h2>
+      <p>Use code <kbd>PARSER2026</kbd> at checkout.</p>
+    </aside>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Orbit Analytics · <a href="/legal" rel="nofollow">Legal</a></p>
+  </footer>
+
+  <script>
+    window.__LANDING = { version: 3, flags: { beta: true } };
+    const fake = "<div>must not become an element</div>";
+    document.querySelectorAll("[data-track]").forEach(function (el) {
+      el.addEventListener("click", function () { /* noop */ });
+    });
+  </script>
+</body>
+</html>

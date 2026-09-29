@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta property="og:title" content="Parsing HTML without a DOM">
+  <meta property="og:image" content="https://example.com/cover.jpg">
+  <link rel="canonical" href="https://example.com/blog/parser-notes">
+  <title>Blog — Parser notes</title>
+  <style>
+    article { max-width: 65ch; margin: 0 auto; line-height: 1.7; }
+    pre { background: #1e1e1e; color: #dcdcdc; padding: 1rem; overflow-x: auto; }
+    .note { border-left: 4px solid #4f8cff; padding-left: 1rem; }
+  </style>
+</head>
+<body>
+  <article itemscope itemtype="https://schema.org/BlogPosting">
+    <header>
+      <h1 itemprop="headline">Building a tokenizer + stack parser</h1>
+      <p>
+        Published <time datetime="2026-09-29" itemprop="datePublished">Sep 29, 2026</time>
+        by <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <span itemprop="name">Dev Team</span>
+        </span>
+      </p>
+    </header>
+
+    <p class="note">Remember: <code>&lt;script&gt;</code> contents are raw text.</p>
+
+    <section id="intro">
+      <h2>Introduction</h2>
+      <p>We compare <strong>DOMParser</strong> (forbidden here) with a hand-rolled scanner.</p>
+      <blockquote cite="https://example.com/spec">
+        <p>Whitespace-only text nodes should be ignored.</p>
+      </blockquote>
+    </section>
+
+    <section id="code-sample">
+      <h2>Sample script block</h2>
+      <script>
+        function demo() {
+          const html = "<section><p>Not parsed</p></section>";
+          return html.length;
+        }
+        // Comment inside script with --> arrow
+        demo();
+      </script>
+    </section>
+
+    <section id="code-sample-2">
+      <h2>Inline CSS block</h2>
+      <style>
+        .post-footer { margin-top: 3rem; color: #888; }
+        .post-footer a::after { content: " →"; }
+        @media print { .note { border: none; } }
+      </style>
+    </section>
+
+    <section id="mixed">
+      <h2>Mixed inline markup</h2>
+      <p>Price: <data value="49.99">$49.99</data> · Rating: <meter value="4.5" min="0" max="5">4.5</meter></p>
+      <details open>
+        <summary>FAQ: Why not use innerHTML?</summary>
+        <p>Because the task forbids DOM APIs.</p>
+      </details>
+      <figure>
+        <img src="diagram.png" alt="Flow diagram" width="600" height="300" srcset="diagram.png 1x, diagram@2x.png 2x">
+        <figcaption>Figure 1 — HTML → tokens → tree</figcaption>
+      </figure>
+    </section>
+
+    <footer class="post-footer">
+      <p>Tags: <a href="/tag/html">html</a>, <a href="/tag/json">json</a></p>
+    </footer>
+  </article>
+
+  <!-- Author sidebar with nested lists -->
+  <aside aria-label="Related posts">
+    <h2>Related</h2>
+    <ol reversed start="3">
+      <li><a href="/blog/1">Token types</a></li>
+      <li><a href="/blog/2">Stack discipline</a></li>
+      <li><a href="/blog/3">Void elements</a></li>
+    </ol>
+  </aside>
+</body>
+</html>
