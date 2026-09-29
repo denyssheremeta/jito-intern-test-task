@@ -2,7 +2,7 @@
 
 ## Live Demo
 
-The live demo will be available on GitHub Pages after deployment.
+**[Open the live demo on GitHub Pages](https://denyssheremeta.github.io/jito-intern-test-task/)**
 
 The demo provides a simple interface for experimenting with the parser:
 
@@ -11,7 +11,7 @@ The demo provides a simple interface for experimenting with the parser:
 * convert HTML to JSON;
 * copy the generated JSON;
 * clear the input and output;
-* inspect the conversion status and character counts.
+* inspect conversion status and character counts.
 
 ---
 
@@ -43,9 +43,9 @@ Tree Builder + Stack
 JSON document tree
 ```
 
-The implementation uses an iterative approach with an explicit stack instead of recursive parsing.
+The parser uses an iterative approach with an explicit stack instead of recursive parsing.
 
-The parser does not use:
+It does not use:
 
 * `DOMParser`;
 * `document.createElement`;
@@ -81,12 +81,12 @@ The implementation focuses on predictable parsing behavior, malformed HTML recov
 }
 ```
 
-Every element always contains:
+Every element contains:
 
-* `type`
-* `tag`
-* `attributes`
-* `children`
+* `type`;
+* `tag`;
+* `attributes`;
+* `children`.
 
 ### Text
 
@@ -191,13 +191,13 @@ Their contents are preserved as text and are not parsed as HTML. JavaScript and 
 
 Whitespace-only text segments are ignored.
 
-For a text segment:
+The parser uses whitespace only to determine whether a text segment is empty:
 
 ```js
 text.trim() === ""
 ```
 
-means that the segment contains only whitespace and should not become a text node.
+If the segment contains only whitespace, no text node is created.
 
 When the segment contains meaningful content:
 
@@ -239,9 +239,7 @@ One edge-case pass covered **81 inputs**, resulting in **0 crashes**. Several pa
 * consecutive literal `<` characters in text;
 * malformed nesting and unmatched closing tags.
 
-The parser was also checked for deep nesting without relying on recursive parsing, helping avoid JavaScript call-stack limitations.
-
-The `html_samples/` directory contains additional manual samples covering both simple and more complex HTML structures.
+The parser was also checked with deep nesting without relying on recursive parsing, helping avoid JavaScript call-stack limitations.
 
 ---
 
@@ -263,17 +261,17 @@ The samples cover:
 * malformed HTML;
 * more complex page structures.
 
-Several larger samples were added specifically to exercise more realistic HTML structures, including landing pages, dashboards, complex forms, articles, attribute-heavy markup, and malformed HTML recovery.
+Several larger samples exercise more realistic HTML structures, including landing pages, dashboards, complex forms, articles, attribute-heavy markup, and malformed HTML recovery.
 
 ### Sample Manifest
 
-The UI cannot directly enumerate files in a directory from the browser, so the available samples are represented by:
+The browser cannot directly enumerate files in a directory, so the available samples are represented by:
 
 ```text
 html_samples/manifest.json
 ```
 
-The manifest is generated with:
+Generate the manifest with:
 
 ```bash
 node build-samples-manifest.js
@@ -291,7 +289,7 @@ After adding, removing, or renaming samples, regenerate the manifest.
 
 The project is available as a static web application:
 
-**[Open the live demo](https://jito-dev.github.io/jito-intern-test-task/)**
+**[Open the live demo](https://denyssheremeta.github.io/jito-intern-test-task/)**
 
 ### Local Development
 
@@ -362,12 +360,12 @@ The implementation intentionally does not attempt to provide complete browser-le
 
 Known limitations include:
 
-* HTML entities are not decoded and remain literal text.
-* Duplicate attributes use the last parsed value.
-* Namespaced tag syntax is not fully supported.
-* `textarea` and `title` are not treated as raw-text elements.
-* Recovery from an unclosed quoted attribute is limited.
-* Incomplete tags at the end of input have simplified recovery behavior.
+* HTML entities are not decoded and remain literal text;
+* duplicate attributes use the last parsed value;
+* namespaced tag syntax is not fully supported;
+* `textarea` and `title` are not treated as raw-text elements;
+* recovery from an unclosed quoted attribute is limited;
+* incomplete tags at the end of input have simplified recovery behavior.
 
 These limitations are consistent with the deliberately scoped parser and the agreed requirements rather than an attempt to implement the complete HTML5 parsing specification.
 
@@ -409,6 +407,7 @@ Before submission:
 * test the parser with the included samples;
 * verify that malformed inputs do not crash the parser;
 * verify that the AI conversation link in `ai_help/chatgpt_chat.txt` is accessible;
-* verify that all required repository files are included.
+* verify that all required repository files are included;
+* verify that the live demo works in an incognito/private browser window.
 
-The task instructions specifically recommend testing the final implementation immediately before submission and checking that the provided links are accessible.
+The final implementation should be tested immediately before submission, and all required links should be checked for accessibility.
